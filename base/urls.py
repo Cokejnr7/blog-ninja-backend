@@ -15,11 +15,32 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework.authtoken.views import obtain_auth_token
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Blog API",
+        default_version='v1',
+        description="api for a simple blog",
+        terms_of_service="https://www.coke.com/policies/terms/",
+        contact=openapi.Contact(email="contact@contacts.local"),
+        license=openapi.License(name="BSD License"),
+    ),
+    public=True,
+    permission_classes=[permissions.AllowAny],
+)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('auth/', include("users.urls")),
     path('api/', include('blog.urls')),
-    # path('api-auth/', include('rest_framework.urls')),
-    path('api-auth/', obtain_auth_token)
+    path(r'', schema_view.with_ui('swagger',
+                                  cache_timeout=0), name='schema-swagger-ui'),
+    path(r'redoc', schema_view.with_ui('redoc',
+                                       cache_timeout=0), name='schema-redoc'),
+
 ]

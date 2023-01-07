@@ -17,19 +17,23 @@ class BlogPagination(PageNumberPagination):
 
 
 class BlogListCreateAPIView(generics.ListCreateAPIView):
+    serializer_class = BlogSerializer
+    permission_classes = [IsAuthenticated]
+    pagination_class = BlogPagination
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['title']
+
+    def get_queryset(self):
+        return Post.objects.filter(author=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
+
+class BlogRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
     queryset = Post.objects.all()
     serializer_class = BlogSerializer
-    # permission_classes = [IsAuthenticated]
-    # pagination_class = BlogPagination
-    # filter_backends = [DjangoFilterBackend]
-    # filterset_fields = ['title']
 
-
-class BlogList(APIView):
-    pass
-
-
-class BlogRetrieveUpdateDestroyAPIView(generics.RetrieveDestroyAPIView):
-    #permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
-    queryset = Post.objects.all()
-    serializer_class = BlogSerializer
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
