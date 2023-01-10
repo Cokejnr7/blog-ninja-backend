@@ -9,6 +9,7 @@ from .blog_permissions import IsAuthorOrReadOnly
 from .models import Post
 from rest_framework.pagination import PageNumberPagination
 from django_filters.rest_framework import DjangoFilterBackend
+from .blog_permissions import IsAuthorOrReadOnly
 # Create your views here.
 
 
@@ -18,13 +19,14 @@ class BlogPagination(PageNumberPagination):
 
 class BlogListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = BlogSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
     pagination_class = BlogPagination
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['title']
+    queryset = Post.objects.all()
 
-    def get_queryset(self):
-        return Post.objects.filter(author=self.request.user)
+    # def get_queryset(self):
+    #     return Post.objects.filter(author=self.request.user)
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)

@@ -12,6 +12,7 @@ class CustomManager(BaseUserManager):
             raise ValueError(_('You must provide an email address'))
         if not username:
             raise ValueError(_('You must provide a username address'))
+        
         email = self.normalize_email(email)
         user = self.model(email=email, username=username, **other_fields)
 
