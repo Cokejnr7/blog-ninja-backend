@@ -9,4 +9,4 @@ class BlogSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = '__all__'
+        fields = ['title', 'body', 'id', 'author']
