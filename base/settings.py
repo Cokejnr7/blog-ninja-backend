@@ -28,7 +28,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", cast=bool)
 
-ALLOWED_HOST = ['web-production-4ea1.up.railway.app', ]
+ALLOWED_HOSTS = ['web-production-4ea1.up.railway.app', ]
 
 
 # Application definition
