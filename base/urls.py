@@ -29,6 +29,7 @@ schema_view = get_schema_view(
         contact=openapi.Contact(email="contact@contacts.local"),
         license=openapi.License(name="BSD License"),
     ),
+    url='https://web-production-4ea1.up.railway.app/',
     public=True,
     permission_classes=[permissions.AllowAny],
 )
