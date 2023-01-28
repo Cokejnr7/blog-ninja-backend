@@ -176,7 +176,8 @@ CORS_ORIGIN_WHITELIST = (
     "http://localhost:3000",
     "http://127.0.0.1:3000",
     "http://127.0.0.1:8000",
-    "https://web-production-4ea1.up.railway.app"
+    "https://blog-ninja.netlify.app",
+    "https://web-production-4ea1.up.railway.app",
 )
 # CORS_ALLOWED_ORIGINS = [
 
